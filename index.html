@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CIPHER - Instrument de criptare securizată a fișierelor folosind criptarea AES-256">
+    <meta name="description" content="CIPHER - Secure file encryption tool using AES-256 encryption">
     <title>C I P H E R</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
     <style>
@@ -746,7 +746,7 @@ textarea.dark-mode {
             <input type="file" id="fileInput">
         </div>
         
-        <button class="clear-console" id="clearConsoleBtn">Ștergere consolă</button>
+        <button class="clear-console" id="clearConsoleBtn">❌ Ștergere consolă ❌</button>
         <div id="console" class="console"></div>
         
         <div class="progress-container" id="progressContainer">
@@ -764,10 +764,10 @@ textarea.dark-mode {
     </main>
     
     <footer>
-        <p>Criptare securizată a fișierelor folosind AES-256<br>
-        <a href="https://github.com/neurici" target="_blank" rel="noopener noreferrer">
-            Urmăriți-mă pe Github
-        </a></p>
+        <a href="https://github.com/neurici/CIPHER?tab=readme-ov-file" target="_blank" rel="noopener noreferrer">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" width="24" height="24" style="filter: invert(1);">
+</a>
+</p>
         <p><small>Versiunea 1.2.0 | <a href="#" id="aboutLink">Despre</a></small></p>
     </footer>
     
@@ -905,8 +905,10 @@ textarea.dark-mode {
             generateKey().then(key => {
                 encryptionKey = key;
 				logToConsole(`⭐ După generare, salvați cheia, dați click pe <font color="white"><b><u>Salvare</u></b></font>, se va descărca fișierul "<b>cheie.decriptare</b>". Pentru decriptarea fișierului, dați click pe <font color="white"><b><u>încărcare</u></b></font> și selectați fișierul "<b>cheie.decriptare</b>".`);
-                logToConsole(`✔️ Cheie Generată: <font color="white"><b>${arrayBufferToBase64(key)}</b></font>`);
 				logToConsole(`⭐ Puteți utiliza cheia generată automat, puteți genera alta, sau puteți crea o cheie derivată dintr-o parolă specificată de dvs. Pentru a genera o cheie, dați click pe <font color="white"><b><u>Generare</u></b></font>! Dacă doriți o cheie derivată dintr-o parolă, dați click pe <font color="white"><b><u>Parolă</u></b></font>`);
+                logToConsole(`✔️ Cheie Generată: <font color="white"><b>${arrayBufferToBase64(key)}</b></font>`);
+				
+				
             });
             
             // Check online status
@@ -991,7 +993,7 @@ textarea.dark-mode {
             const offlineStatus = document.getElementById('offlineStatus');
             if (!navigator.onLine) {
                 offlineStatus.style.display = 'block';
-                logToConsole('Atenție: Sunteți offline. Este posibil ca unele funcții să fie limitate.', false, 'warning');
+                logToConsole('⚠️ Atenție: Sunteți offline. Este posibil ca unele funcții să fie limitate.', false, 'warning');
             } else {
                 offlineStatus.style.display = 'none';
             }
@@ -1069,7 +1071,7 @@ textarea.dark-mode {
             // Only enable decrypt for .enc files
             decryptBtn.disabled = !file.name.endsWith('.criptat');
             
-            logToConsole(`Fișier Selectat: ${file.name}`);
+            logToConsole(`✔️ Fișier Selectat: ${file.name}`);
         }
         
         async function handleGenerateKey() {
@@ -1091,7 +1093,7 @@ textarea.dark-mode {
                 const keyStr = arrayBufferToBase64(encryptionKey);
                 const blob = new Blob([keyStr], { type: 'application/octet-stream' });
                 saveFile(blob, 'cheie.decriptare');
-                logToConsole('Cheia a fost salvată cu succes');
+                logToConsole('✔️ Cheia a fost salvată cu succes');
             } catch (error) {
                 logError(`❌ Eroare la salvarea cheii: ${error.message}`);
             }
@@ -1108,7 +1110,7 @@ textarea.dark-mode {
                 try {
                     const keyStr = await readFileAsText(file);
                     encryptionKey = await base64ToArrayBuffer(keyStr.trim());
-                    logToConsole('Cheia a fost încărcată cu succes');
+                    logToConsole('✔️ Cheia a fost încărcată cu succes');
                 } catch (error) {
                     logError(`❌ Eroare la încărcarea cheii: ${error.message}`);
                 }
@@ -1153,15 +1155,15 @@ textarea.dark-mode {
                 
                 switch(strength) {
                     case 1:
-                        message = 'Ușoară';
+                        message = '⚠️ Ușoară';
                         color = 'var(--error-color)';
                         break;
                     case 2:
-                        message = 'Moderată';
+                        message = '⚠️ Moderată';
                         color = 'var(--warning-color)';
                         break;
                     case 3:
-                        message = 'Complexă';
+                        message = '✔️ Complexă';
                         color = 'var(--accent-color)';
                         break;
                     case 4:
@@ -1179,12 +1181,12 @@ textarea.dark-mode {
             const password = passwordInput.value;
             
             if (!password) {
-                logError('Vă rugăm să introduceți o parolă');
+                logError('⚠️ Vă rugăm să introduceți o parolă');
                 return;
             }
             
             if (password.length < 8) {
-                logError('Parola trebuie să conțină cel puțin 8 caractere');
+                logError('⚠️ Parola trebuie să conțină cel puțin 8 caractere');
                 return;
             }
             
@@ -1221,7 +1223,7 @@ textarea.dark-mode {
                 // Export the raw key
                 encryptionKey = await crypto.subtle.exportKey('raw', derivedKey);
                 
-                logToConsole('Cheia a fost generată cu succes din parolă');
+                logToConsole('✔️ Cheia a fost generată cu succes din parolă');
                 passwordModal.style.display = 'none';
                 passwordInput.value = '';
                 keyStrength.textContent = '';
@@ -1232,13 +1234,13 @@ textarea.dark-mode {
         
         function handleSaveSettings() {
             KEY_SIZE = parseInt(keySizeSelect.value);
-            logToConsole(`Setările au fost salvate. Tip cheie: ${KEY_SIZE}-bit.`);
+            logToConsole(`⚠️ Setările au fost salvate. Tip cheie: ${KEY_SIZE}-bit.`);
             settingsModal.style.display = 'none';
         }
         
         async function handleEncryptFile() {
             if (!currentFile || !encryptionKey) {
-                logError('Selectați un fișier și asigurați-vă că aveți o cheie');
+                logError('⚠️ Selectați un fișier și asigurați-vă că aveți o cheie');
                 return;
             }
             
@@ -1258,18 +1260,18 @@ textarea.dark-mode {
                 
                 logToConsole('Fișierul a fost criptat cu succes');
             } catch (error) {
-                logError(`❌ Eroare de criptare: ${error.message}`);
+                logError(`❌ Eroare criptare: ${error.message}`);
             }
         }
         
         async function handleDecryptFile() {
             if (!currentFile || !encryptionKey) {
-                logError('Selectați un fișier și asigurați-vă că aveți o cheie');
+                logError('⚠️ Selectați un fișier și asigurați-vă că aveți o cheie');
                 return;
             }
             
             if (!currentFile.name.endsWith('.criptat')) {
-                logError('Selectați un fișier criptat valid (.criptat)');
+                logError('⚠️ Selectați un fișier criptat valid (.criptat)');
                 return;
             }
             
@@ -1287,9 +1289,9 @@ textarea.dark-mode {
                 const outputFileName = `${currentFile.name.replace('.criptat', '')}`;
                 saveFile(blob, outputFileName);
                 
-                logToConsole('Fișierul a fost decriptat cu succes');
+                logToConsole('✔️ Fișierul a fost decriptat cu succes');
             } catch (error) {
-                logError(`Decryption error: ${error.message}`);
+                logError(`❌ Eroare decriptare: ${error.message}`);
             }
         }
         
@@ -1431,7 +1433,7 @@ textarea.dark-mode {
                 codeLine.classList.add('code-line');
                 
                 // Generate random code-like text
-                const codeChars = ['0', '1', '<', '>', '/', '\\', '{', '}', '[', ']', '(', ')', 'Cogian', 'Sergiu', 'while', 'if', 'CIPHER'];
+                const codeChars = ['0', '1', '<', '>', '/', '\\', '{', '}', '[', ']', '(', ')', 'Cogian', 'Sergiu', 'while', 'if', 'CIPHER', '❌', '⚠️', '⭐', '📁' ];
                 codeLine.textContent = Array.from({length: Math.random() * 20}, () => 
                     codeChars[Math.floor(Math.random() * codeChars.length)]
                 ).join('');
