@@ -25,7 +25,7 @@
 
 | Interfața principală | Modal parolă | Setări |
 |----------------------|--------------|--------|
-| ![Index](index.png) | ![Parolă](parola.png) | ![Setări](setari.png) |
+| ![Index](screenshoot/index.png) | ![Parolă](screenshoot/parola.png) | ![Setări](screenshoot/setari.png) |
 
 ---
 
