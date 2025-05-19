@@ -23,7 +23,7 @@
 
 ## 📷 Capturi de ecran
 
-| Interfața principală | Modal parolă | Setări |
+| Interfața principală | Generare cheie din parolă | Setări |
 |----------------------|--------------|--------|
 | ![Index](screenshoot/index.png) | ![Parolă](screenshoot/parola.png) | ![Setări](screenshoot/setari.png) |
 
